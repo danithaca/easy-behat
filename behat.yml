@@ -1,0 +1,48 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+      logfiles_path: %paths.base%/logfiles
+      # filters:
+      #   tags: "@core"
+
+  formatters:
+    pretty: ~
+    html:
+      output_path: %paths.base%/logfiles/reports
+
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      selenium2: ~
+      show_cmd: 'firefox %s'
+      show_tmp_dir: '/tmp'
+      base_url: http://danzhou-aws.amazon.com
+
+    emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+      name: html
+      renderer: Twig,Behat2
+      file_name: default
+      print_args: true
+      print_outp: true
+      loop_break: true
+
+
+gamma:
+  suites:
+    default:
+      filters:
+        tags: "~@dev"
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://pre-prod.amazon.com/
+
+prod:
+  suites:
+    default:
+      filters:
+        tags: "~@dev"
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://www.amazon.com/
