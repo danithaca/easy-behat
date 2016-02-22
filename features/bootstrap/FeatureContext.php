@@ -185,7 +185,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext
    */
   public function forceClickElement($element)
   {
-    $snippet = "$(\"{$element}\").click();";
+    $snippet = "document.querySelector(\"{$element}\").click();";
     $js = "(function () {\n  $snippet  \n})();";
     $this->getSession()->executeScript($js);
     // wait 1 second for selenium to catch up on the browser side.

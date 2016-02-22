@@ -91,8 +91,9 @@ Vagrant.configure(2) do |config|
     composer require behat/mink-selenium2-driver
     composer require emuse/behat-html-formatter 
 
-    # download selenium server (put it to git instead.)
-    # cd /vagrant
-    # wget http://goo.gl/qTy1IB selenium.jar
+    # download selenium server
+    if [ ! -f /vagrant/selenium.jar ]; then
+      wget http://goo.gl/qTy1IB -O /vagrant/selenium.jar
+    fi
   SHELL
 end

@@ -2,6 +2,24 @@
 
 Create vagrant environment to run Behat with selenium, firefox. Include a couple of commonly used features such as taking screenshots.
 
+## Installation
+
+1. Git clone the code repository
+2. Install vagrant from https://www.vagrantup.com/
+3. Run `vagrant up` to create the VM box
+4. Go to VirtualBox and set RAM to be at least 1GB
+
+## Run Behat
+
+You need to set up Firefox to run in virtual display because the VM doesn't come with the X system. First, login to vagrant using `vagrant ssh`. Then:
+
+1. In one terminal, run `sudo Xvfb :10`
+2. In another terminal, start Selenium `sudo Xvfb :10; java -jar selenium.jar`
+
+Finally, you can run Behat using `vendor/bin/behat ...`
+
+If any step fails, you can see the screenshot under the most recent log folder. Or use "take a screenshot" to ask Behat do a screenshot.
+
 ## Supported Directives
 
 default |  Then (I )break
