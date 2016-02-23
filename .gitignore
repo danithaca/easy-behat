@@ -1,0 +1,9 @@
+.vagrant
+composer.lock
+composer.json
+vendor
+logfiles
+selenium.jar
+*.sublime-project
+*.sublime-workspace
+
