@@ -4,6 +4,7 @@ composer.json
 vendor
 logfiles
 selenium.jar
+
 *.sublime-project
 *.sublime-workspace
-
+.DS_Store
