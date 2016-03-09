@@ -1,27 +1,59 @@
 # easy-behat
 
-Create vagrant environment to run Behat with selenium, firefox. Include a couple of commonly used features such as taking screenshots.
+Create vagrant VM environment to run Behat with selenium and firefox pre-installed.
+
+Behat: http://docs.behat.org/en/v3.0/
 
 ## Installation
 
-1. Git clone the code repository
-2. Install vagrant from https://www.vagrantup.com/
-3. Run `vagrant up` to create the VM box
-4. Go to VirtualBox and set RAM to be at least 1GB
+This package will install a VirtualBox VM, and therefore requires a VirtualBox environment. 
 
-## Run Behat
+Use the following steps to create a VM with all the dependencies pre-installed.
 
-You need to set up Firefox to run in virtual display because the VM doesn't come with the X system. First, login to vagrant using `vagrant ssh`. Then:
+1. Install vagrant from https://www.vagrantup.com/.
+2. Go to the repo's root folder.
+3. Run `vagrant up` to create the VM box. Vagrantfile script will get running and actually install the VM to VirtualBox.
 
-1. In one terminal, run `sudo Xvfb :10`
-2. In another terminal, start Selenium `sudo Xvfb :10; java -jar selenium.jar`
+You might want to create `local.yml` with the following settings to point test to your own DevDesktop. Otherwise it will use the default one in `behat.yml`, which is `http://localhost`.
 
-Finally, you can run Behat using `vendor/bin/behat ...`
+```
+default:
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://localhost
+```
 
-If any step fails, you can see the screenshot under the most recent log folder. Or use "take a screenshot" to ask Behat do a screenshot.
+
+## Run Behat Test
+
+Please make sure vagrant VM is up and running by using `vagrant up`. Then, login to vagrant VM using `vagrant ssh -- -X`. `-- -X` is to turn on X-Forward so that Firefox on the VM can display. Next, start the Selenium server and keep it running:
+
+```
+cd /vagrant
+java -jar selenium.jar
+```
+
+Finally, to run Behat test case, open another vagrant session by using `vagrant ssh`. And then execute the following:
+
+```
+cd /vagrant
+vendor/bin/behat 					# this is to run all test against your dev server
+vendor/bin/behat --profile=test		# this is to run all test against test
+vendor/bin/behat --profile=prod		# this is to run all test against prod
+```
+
+Test report can be found in logfiles/report folder (will be created after first run). If any step fails, you can see the screenshot under the logfiles folder.
+
+If you have a test case that you don't want to add to the git repo, name the file as "*_local.feature". Those files are ignored by git.
+
+If you don't need to look at Firefox, you might use the alternative "headless Firefox" approach: http://www.installationpage.com/selenium/how-to-run-selenium-headless-firefox-in-ubuntu/. In a nutshell, in vagrant session 1, run `sudo Xvfb :10 -ac` and keep it open. In vagrant session 2, run `export DISPLAY=:10; java -jar selenium.jar` and keep it open. Then run the Behat test. Using this approach, you don't need X-Forward to see Firefox -- Firefox is running on the "virtual" display on display port 10.
+
 
 ## Supported Directives
 
+The following is the list of directives you can use in the test script (`*.feature` file). For more details about the Gherkins syntax, see http://docs.behat.org/en/v3.0/guides/1.gherkin.html
+
+```
 default |  Then (I )break
 default |  Then /^take a screenshot$/
 default |  Then /^save last response$/
@@ -81,3 +113,4 @@ default |  Then /^the checkbox "(?P<checkbox>(?:[^"]|\\")*)" is (?:unchecked|not
 default |  Then /^print current URL$/
 default |  Then /^print last response$/
 default |  Then /^show last response$/
+```

@@ -1,3 +1,6 @@
+imports:
+  - local.yml
+
 default:
   suites:
     default:
@@ -18,7 +21,7 @@ default:
       selenium2: ~
       show_cmd: 'firefox %s'
       show_tmp_dir: '/tmp'
-      base_url: http://danzhou-aws.amazon.com
+      base_url: http://localhost
 
     emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
       name: html
@@ -29,14 +32,14 @@ default:
       loop_break: true
 
 
-gamma:
+test:
   suites:
     default:
       filters:
         tags: "~@dev"
   extensions:
     Behat\MinkExtension:
-      base_url: http://pre-prod.amazon.com/
+      base_url: http://test.amazon.com/
 
 prod:
   suites:
