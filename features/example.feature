@@ -3,7 +3,9 @@ Feature: behat demo
   As a developer
   I need to be able to run this example
 
+  @javascript
   Scenario: test amazon.com
     Given I am on "http://amazon.com"
-    Then the response status code should be 200
+    Then I should see "Prime"
+    Then print console log
     

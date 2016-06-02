@@ -1,6 +1,3 @@
-imports:
-  - local.yml
-
 default:
   suites:
     default:
@@ -13,7 +10,7 @@ default:
   formatters:
     pretty: ~
     html:
-      output_path: %paths.base%/logfiles/reports
+      output_path: %paths.base%/logfiles
 
   extensions:
     Behat\MinkExtension:
@@ -25,21 +22,12 @@ default:
 
     emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
       name: html
-      renderer: Twig,Behat2
+      renderer: Twig
       file_name: default
       print_args: true
       print_outp: true
       loop_break: true
 
-
-test:
-  suites:
-    default:
-      filters:
-        tags: "~@dev"
-  extensions:
-    Behat\MinkExtension:
-      base_url: http://test.amazon.com/
 
 prod:
   suites:
